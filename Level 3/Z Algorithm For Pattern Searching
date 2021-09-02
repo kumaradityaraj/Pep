@@ -1,0 +1,44 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+  public static void solution(String txt, String pat) {
+    String temp = pat + "#" + txt;
+    int[] z = zfunc(temp);
+    for (int i = 1; i < temp.length(); i++) {
+      if (z[i] == pat.length()) {
+        System.out.println(i - pat.length() - 1);
+      }
+    }
+  }
+
+  private static int[] zfunc(String st) {
+    int[] z = new int[st.length()];
+    int n = st.length();
+    int l = 0;
+    int r = 0;
+    for (int i = 0; i < st.length(); i++) {
+      if (i < r) {
+        z[i] = Math.min(r - i + 1, z[i - l]);
+      }
+      while (i + z[i] < n && st.charAt(z[i]) == st.charAt(i + z[i])) {
+        z[i]++;
+      }
+      if (i + z[i] - 1 > r) {
+        l = i;
+        r = i + z[i] - 1;
+      }
+    }
+    return z;
+  }
+
+  public static void main(String[] args) {
+    Scanner scn = new Scanner(System.in);
+    String s1 = scn.nextLine();
+    String s2 = scn.nextLine();
+    solution(s1, s2);
+    System.out.println();
+  }
+
+}
