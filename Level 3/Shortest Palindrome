@@ -1,0 +1,39 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+  public static String solution(String str) {
+    String stdash = str + "#" + new StringBuilder(str).reverse().toString();
+    int lps = LPS(stdash);
+    String ans = new StringBuilder(str.substring(lps)).reverse().toString() + str;
+    return ans;
+  }
+
+  public static int LPS(String st) {
+    int[] lps = new int[st.length()];
+    int len = 0;
+    int i = 1;
+    while (i < st.length()) {
+      if (st.charAt(i) == st.charAt(len)) {
+        len++;
+        lps[i] = len;
+        i++;
+      } else {
+        if (len > 0) {
+          len = lps[len - 1];
+        } else {
+          i++;
+        }
+      }
+    }
+    return lps[lps.length - 1];
+  }
+
+  public static void main(String[] args) throws Exception {
+    Scanner scn = new Scanner(System.in);
+    String str = scn.next();
+    System.out.println(solution(str));
+  }
+
+}
