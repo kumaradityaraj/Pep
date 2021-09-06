@@ -1,0 +1,43 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+  public static void main(String[] args) throws NumberFormatException, IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String st = br.readLine();
+    solution(st);
+    br.readLine();
+
+  }
+  public static int kmp(String st) {
+    int[] lps = new int [st.length()];
+    int i = 1;
+    int len = 0;
+    while (i < st.length()) {
+      if (st.charAt(i) == st.charAt(len)) {
+        len++;
+        lps[i] = len;
+        i++;
+      } else {
+        if (len > 0) {
+          len = lps[len - 1];
+        } else {
+          i++;
+        }
+      }
+    }
+    return lps[lps.length - 1];
+  }
+  public static void solution(String st) {
+    int val = kmp(st);
+    int denom = st.length() - val;
+    int num = st.length();
+    if (num % denom == 0) {
+      System.out.println(num / denom);
+    } else {
+      System.out.println("1");
+    }
+
+  }
+
+}
