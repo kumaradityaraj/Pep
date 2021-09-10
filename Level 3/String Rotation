@@ -1,0 +1,50 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+  public static void main(String[] args) throws NumberFormatException, IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    String S = br.readLine();
+    String T = br.readLine();
+
+    Solution(S, T);
+  }
+
+  private static void Solution(String s, String t) {
+    String fin = t + "#" + s + s;
+    int[] lps = lpsarr(fin);
+    for (int i = 0; i < lps.length; i++) {
+      if (lps[i] == t.length()) {
+        if (i == t.length() + s.length()) {
+          System.out.println(0);
+          return;
+        } else {
+          System.out.println(lps.length - i - 1);
+          return;
+        }
+      }
+    }
+    System.out.println(-1);
+  }
+  public static int[] lpsarr(String st) {
+    int[] lps = new int[st.length()];
+    int i = 1;
+    int len = 0;
+    while (i < st.length()) {
+      if (st.charAt(i) == st.charAt(len)) {
+        len++;
+        lps[i] = len;
+        i++;
+      } else {
+        if (len > 0) {
+          len = lps[len - 1];
+        } else {
+          i++;
+        }
+      }
+    }
+    return lps;
+  }
+}
